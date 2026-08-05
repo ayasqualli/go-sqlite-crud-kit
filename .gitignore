@@ -1,0 +1,11 @@
+*.db
+*.db-shm
+*.db-wal
+bin/
+*.test
+*.out
+coverage.*
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
