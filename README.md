@@ -146,8 +146,7 @@ The test suite checks automatic setup, one-time seeding, persistence after reope
 ├── taskstore/             # Task repository and SQL implementation
 ├── cmd/demo-api/          # Runnable net/http integration example
 ├── scripts/demo.sh        # CRUD verification flow
-├── docs/INTEGRATION.md    # Add the module to another Go project
-├── docs/ASSIGNMENT_NOTES.md
+├── docs/Integration.md    # Add the module to another Go projec
 ├── Makefile
 └── go.mod
 ```
