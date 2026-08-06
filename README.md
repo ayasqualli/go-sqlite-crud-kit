@@ -2,17 +2,12 @@
 
 A standalone persistence component for Go projects. It separates database work from HTTP routes so the same storage layer can be reused by a `net/http` API now and added to other projects later.
 
-```text
-HTTP handlers / CLI / worker
-            |
-            v
-  taskstore.Repository
-            |
-            v
-    SQLiteStore + SQL
-            |
-            v
-         tasks.db
+```mermaid
+flowchart TD
+    A["HTTP / CLI / worker adapter"] -->|calls domain operations| B["taskstore.Repository"]
+    B -->|implemented by| C["SQLiteStore"]
+    C -->|uses generic connection helpers| D["sqlitekit"]
+    D --> E["tasks.db"]
 ```
 
 The demo keeps the same task CRUD behavior while moving storage from a Go slice to SQLite: automatic database creation, automatic schema creation, one-time seeding, parameterized queries, persistence across restarts, and correct not-found signaling.
@@ -64,8 +59,8 @@ workspace/
 Inside `my-api`:
 
 ```bash
-go mod edit -replace github.com/your-username/go-sqlite-crud-kit=../go-sqlite-crud-kit
-go get github.com/your-username/go-sqlite-crud-kit/taskstore
+go mod edit -replace github.com/ayasqualli/go-sqlite-crud-kit=../go-sqlite-crud-kit
+go get github.com/ayasqualli/go-sqlite-crud-kit/taskstore
 go mod tidy
 ```
 
@@ -83,7 +78,7 @@ defer store.Close()
 app := NewApp(store) // NewApp should accept taskstore.Repository
 ```
 
-See [`docs/INTEGRATION.md`](docs/INTEGRATION.md) for the exact interface injection and HTTP error mapping pattern.
+See [`docs/Integration.md`](docs/Integration.md) for the exact interface injection and HTTP error mapping pattern.
 
 ## Database schema
 
